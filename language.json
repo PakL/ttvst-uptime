@@ -1,0 +1,20 @@
+{
+	"Uptime Overlay": {
+		"de": "Uptime-Overlay"
+	},
+	"Write uptime to this file": {
+		"de": "Uptime in diese Datei schreiben"
+	},
+	"Uptime Settings": {
+		"de": "Uptime-Einstellungen"
+	},
+	"Select a file that the uptime should be written to.": {
+		"de": "Wähle eine Datei in die die Uptime geschrieben werden soll."
+	},
+	"Select file": {
+		"de": "Datei auswählen"
+	},
+	"Disable file output": {
+		"de": "Dateiausgabe deaktivieren"
+	}
+}

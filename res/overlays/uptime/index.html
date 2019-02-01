@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Uptime-Timer</title>
+		<script type="application/javascript" src="../jquery.js"></script>
+		<script type="application/javascript" src="../client_websocket.js"></script>
+		<script type="application/javascript">
+			var hash = document.location.hash.substr(1);
+			var args = hash.split("&");
+			var goal = -1;
+
+			var timerElement = null;
+
+			var ws = new WebsocketHelper();
+			$(document).ready(function(){
+				ws.on("uptime_update=", function(msg){
+					msg = msg.substr(14);
+
+					if(msg.length > 0) {
+						goal = new Date(msg).getTime();
+					} else {
+						goal = -1
+					}
+					refreshTimer()
+				});
+			});
+
+			var refreshTimer = function() {
+				var now = new Date().getTime();
+				if(goal > 0 && goal < now) {
+					var sec = Math.ceil((now-goal) / 1000);
+					var min = Math.floor(sec / 60); sec = sec - (min * 60);
+					var hou = Math.floor(min / 60); min = min - (hou * 60);
+
+					timerElement.text(
+						(hou > 0 ? hou + ':' : '' ) +
+						((min < 10 && hou > 0) ? '0' + min : min) + ':' +
+						(sec < 10 ? '0' + sec : sec)
+					);
+				} else {
+					timerElement.text('');
+				}
+			}
+		</script>
+		<style type="text/css">
+			html, body {
+				background: transparent;
+				width: 100%;
+				height: 100%;
+				padding: 0px;
+				margin: 0px;
+				text-align: center;
+				overflow: hidden;
+				font-family: "Anago", Sans-serif;
+			}
+			#timer {
+				font-variant-numeric: tabular-nums; /* Gives numbers a fixed width, so they don't jump around with a non-monospaced font */
+				display: inline-block;
+				white-space: nowrap;
+				font-weight: 700;
+				font-size: 100px;
+				color: white;
+				 -webkit-text-stroke: 2px black;
+				text-stroke: 2px black;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="timer"></div>
+
+		<script type="application/javascript">
+
+			$(document).ready(function(){
+				timerElement = $('#timer');
+
+				if(args.indexOf("black") >= 0) {
+					timerElement.css({"color": "black", "-webkit-text-stroke": "2px white", "text-stroke": "2px white"});
+				}
+
+				refreshTimer()
+			});
+		</script>
+	</body>
+</html>
