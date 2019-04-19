@@ -63,7 +63,8 @@ class Uptime {
 		if(this.tool.channel.streamobject.hasOwnProperty('started_at')) {
 			broadcast = this.tool.channel.streamobject.started_at
 		}
-		this.overlays.broadcastWsMessage('uptime_update=' + broadcast)
+		if(broadcast.length > 0)
+			this.overlays.broadcastWsMessage('uptime_update=' + broadcast)
 
 		if(this.outputFilePath.length > 0) {
 			let uptimeStr = ''
