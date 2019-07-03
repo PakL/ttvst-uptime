@@ -15,40 +15,40 @@ class Uptime {
 		this.timeoutObject = null
 
 		const self = this
-		this.tool.on('load', () => {
-			self.overlays.appendSetting('', self.tool.i18n.__('Overlay URL'), 'text', {attrid: 'uptime_overlay_url', set: 'uptime', setLabel: i18n.__('Uptime Overlay'), readonly: true, default: 'http://localhost:' + self.overlays.overlayport + '/uptime/index.html', 'description': self.tool.i18n.__('Add #black to the end of the URL to get black text with white borders instead of white text with black borders.')})
-			self.overlays.appendSetting('', self.tool.i18n.__('Black font'), 'checkbox', {set: 'uptime', readonly: true, default: false, onchange: (e) => {
-				if(e.target.checked) {
-					document.querySelector('#uptime_overlay_url').value = 'http://localhost:' + self.overlays.overlayport + '/uptime/index.html#black'
-				} else {
-					document.querySelector('#uptime_overlay_url').value = 'http://localhost:' + self.overlays.overlayport + '/uptime/index.html'
-				}
-			}})
 
-			self.outputFilePath = self.settings.getString('uptime_file', '')
-			self.settings.appendSetting('uptime_file', i18n.__('Write uptime to this file'), 'text', { attrid: 'uptime_file_setting', set: 'uptime_settings', setLabel: i18n.__('Uptime Settings'), description: i18n.__('Select a file that the uptime should be written to.'), default: '', readonly: true })
-			self.settings.appendSetting('', i18n.__('Select file'), 'button', { set: 'uptime_settings', onclick: () => {
-				let file = dialog.showSaveDialog(BrowserWindow.getFocusedWindow(), { })
-				if(typeof(file) !== 'string') {
-					file = ''
-				}
-				self.settings.setString('uptime_file', file)
-				self.outputFilePath = file
-				document.querySelector('#uptime_file_setting').value = file
-				self.fileWriteError = false
-			} })
-			self.settings.appendSetting('', i18n.__('Disable file output'), 'button', { set: 'uptime_settings', onclick: () => {
-				let file = ''
-				self.settings.setString('uptime_file', file)
-				self.outputFilePath = file
-				document.querySelector('#uptime_file_setting').value = file
-				self.fileWriteError = false
-			} })
+		this.overlays.appendSetting('', this.tool.i18n.__('Overlay URL'), 'text', {attrid: 'uptime_overlay_url', set: 'uptime', setLabel: i18n.__('Uptime Overlay'), readonly: true, default: 'http://localhost:' + this.overlays.overlayport + '/uptime/index.html', 'description': this.tool.i18n.__('Add #black to the end of the URL to get black text with white borders instead of white text with black borders.')})
+		this.overlays.appendSetting('', this.tool.i18n.__('Black font'), 'checkbox', {set: 'uptime', readonly: true, default: false, onchange: (e) => {
+			if(e.target.checked) {
+				document.querySelector('#uptime_overlay_url').value = 'http://localhost:' + self.overlays.overlayport + '/uptime/index.html#black'
+			} else {
+				document.querySelector('#uptime_overlay_url').value = 'http://localhost:' + self.overlays.overlayport + '/uptime/index.html'
+			}
+		}})
 
-			self.timeoutObject = window.setTimeout(() => {
-				self.updateUptime()
-			}, 1000)
-		})
+		this.outputFilePath = this.settings.getString('uptime_file', '')
+		this.settings.appendSetting('uptime_file', i18n.__('Write uptime to this file'), 'text', { attrid: 'uptime_file_setting', set: 'uptime_settings', setLabel: i18n.__('Uptime Settings'), description: i18n.__('Select a file that the uptime should be written to.'), default: '', readonly: true })
+		this.settings.appendSetting('', i18n.__('Select file'), 'button', { set: 'uptime_settings', onclick: () => {
+			let file = dialog.showSaveDialog(BrowserWindow.getFocusedWindow(), { })
+			if(typeof(file) !== 'string') {
+				file = ''
+			}
+			self.settings.setString('uptime_file', file)
+			self.outputFilePath = file
+			document.querySelector('#uptime_file_setting').value = file
+			self.fileWriteError = false
+		} })
+		this.settings.appendSetting('', i18n.__('Disable file output'), 'button', { set: 'uptime_settings', onclick: () => {
+			let file = ''
+			self.settings.setString('uptime_file', file)
+			self.outputFilePath = file
+			document.querySelector('#uptime_file_setting').value = file
+			self.fileWriteError = false
+		} })
+
+		this.timeoutObject = window.setTimeout(() => {
+			self.updateUptime()
+		}, 1000)
+
 		this.tool.on('exit', () => {
 			if(self.timeoutObject !== null) {
 				clearTimeout(self.timeoutObject)

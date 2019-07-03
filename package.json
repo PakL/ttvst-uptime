@@ -1,7 +1,7 @@
 {
 	"name": "uptime",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"systems": ["win32"],
-	"toolversion": "0.x.x",
+	"toolversion": "1.x.x",
 	"description": "Overlay for stream uptime or optional file output"
 }
