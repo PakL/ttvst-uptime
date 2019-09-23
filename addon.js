@@ -28,7 +28,7 @@ class Uptime {
 		this.outputFilePath = this.settings.getString('uptime_file', '')
 		this.settings.appendSetting('uptime_file', i18n.__('Write uptime to this file'), 'text', { attrid: 'uptime_file_setting', set: 'uptime_settings', setLabel: i18n.__('Uptime Settings'), description: i18n.__('Select a file that the uptime should be written to.'), default: '', readonly: true })
 		this.settings.appendSetting('', i18n.__('Select file'), 'button', { set: 'uptime_settings', onclick: () => {
-			let file = dialog.showSaveDialog(BrowserWindow.getFocusedWindow(), { })
+			let file = dialog.showSaveDialogSync(BrowserWindow.getFocusedWindow(), { })
 			if(typeof(file) !== 'string') {
 				file = ''
 			}
